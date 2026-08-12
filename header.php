@@ -15,7 +15,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 <header id="masthead" class="site-header">
 	<div class="container site-header__inner">
 		<div class="site-branding">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html( mor_get_store_detail( 'company_name' ) ); ?></a>
+			<a class="site-branding__link" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( mor_get_store_detail( 'company_name' ) ); ?>">
+				<?php
+				$custom_logo_id = get_theme_mod( 'custom_logo' );
+				if ( $custom_logo_id ) {
+					echo wp_get_attachment_image(
+						$custom_logo_id,
+						'full',
+						false,
+						array(
+							'class' => 'site-branding__logo',
+							'alt'   => esc_attr( mor_get_store_detail( 'company_name' ) ),
+						)
+					);
+				} else {
+					?>
+					<img class="site-branding__logo" src="<?php echo esc_url( MOR_THEME_URI . '/assets/images/logo.svg' ); ?>" width="36" height="36" alt="<?php echo esc_attr( mor_get_store_detail( 'company_name' ) ); ?>">
+					<?php
+				}
+				?>
+			</a>
 		</div>
 
 		<nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Primary', 'mor-websites' ); ?>">
@@ -43,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</nav>
 
 		<div class="header-actions">
-			<div class="currency-switcher" role="group" aria-label="<?php esc_attr_e( 'Currency display', 'mor-websites' ); ?>">
+			<div class="currency-switcher currency-switcher--header" role="group" aria-label="<?php esc_attr_e( 'Currency display', 'mor-websites' ); ?>">
 				<button type="button" data-currency="ghs" aria-pressed="true">GH₵ GHS</button>
 				<button type="button" data-currency="usd" aria-pressed="false">$ USD</button>
 			</div>
@@ -69,6 +88,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 			<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'mor-websites' ); ?></a></li>
 		</ul>
-		<p class="currency-note"><?php esc_html_e( 'Prices shown in USD are for reference only — checkout always completes in Ghanaian Cedis (GHS).', 'mor-websites' ); ?></p>
 	</div>
 </header>
+
+<div class="currency-switcher currency-switcher--float" role="group" aria-label="<?php esc_attr_e( 'Currency display', 'mor-websites' ); ?>">
+	<button type="button" data-currency="ghs" aria-pressed="true">GH₵</button>
+	<button type="button" data-currency="usd" aria-pressed="false">$</button>
+</div>

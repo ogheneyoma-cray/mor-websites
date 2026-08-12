@@ -23,6 +23,7 @@ require_once MOR_THEME_DIR . '/inc/customizer.php';
 require_once MOR_THEME_DIR . '/inc/currency-switcher.php';
 require_once MOR_THEME_DIR . '/inc/contact-form.php';
 require_once MOR_THEME_DIR . '/inc/content-importer.php';
+require_once MOR_THEME_DIR . '/inc/page-content-fields.php';
 
 // Shared GitHub branch updater — do not modify; merged in independently.
 require_once MOR_THEME_DIR . '/inc/updater/updater-config.php';

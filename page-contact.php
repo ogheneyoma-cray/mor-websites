@@ -3,18 +3,38 @@
  * Contact page — auto-applied to the page with slug "contact"
  * (created by the content importer). Custom layout: doesn't render
  * the page's post_content, it renders this fixed structure instead.
+ * Text is still editable from the normal Edit Page screen via the
+ * "Page Content" meta boxes registered in inc/page-content-fields.php.
  */
 
 get_header();
 
-$status = isset( $_GET['contact'] ) ? sanitize_text_field( wp_unslash( $_GET['contact'] ) ) : '';
+$post_id = get_queried_object_id();
+$status  = isset( $_GET['contact'] ) ? sanitize_text_field( wp_unslash( $_GET['contact'] ) ) : '';
+
+$business_hours = mor_get_page_field( $post_id, 'mor_contact_hours', '' );
+if ( '' === $business_hours ) {
+	$business_hours = "Monday – Friday: 8:00 AM – 6:00 PM\nSaturday: 9:00 AM – 3:00 PM\nSunday: Closed (emergency support requests only)";
+}
+$business_hours_lines = array_filter( array_map( 'trim', explode( "\n", $business_hours ) ) );
+
+$faq_defaults = mor_contact_faq_defaults();
+$faqs         = array();
+for ( $i = 1; $i <= 5; $i++ ) {
+	$question = mor_get_page_field( $post_id, "mor_contact_faq{$i}_q", $faq_defaults[ $i ]['q'] );
+	$answer   = mor_get_page_field( $post_id, "mor_contact_faq{$i}_a", $faq_defaults[ $i ]['a'] );
+	if ( '' === $question || '' === $answer ) {
+		continue;
+	}
+	$faqs[] = array( 'q' => $question, 'a' => $answer );
+}
 ?>
 <main id="primary" class="site-main">
 
 	<section class="hero">
 		<div class="container hero__inner">
-			<h1><?php esc_html_e( 'Get in Touch', 'mor-websites' ); ?></h1>
-			<p class="hero__tagline"><?php esc_html_e( 'Questions about a service, an existing job, or a quote — reach us directly or send a message below.', 'mor-websites' ); ?></p>
+			<h1><?php echo esc_html( mor_get_page_field( $post_id, 'mor_contact_hero_heading', __( 'Get in Touch', 'mor-websites' ) ) ); ?></h1>
+			<p class="hero__tagline"><?php echo esc_html( mor_get_page_field( $post_id, 'mor_contact_hero_tagline', __( 'Questions about a service, an existing job, or a quote — reach us directly or send a message below.', 'mor-websites' ) ) ); ?></p>
 		</div>
 	</section>
 
@@ -41,17 +61,21 @@ $status = isset( $_GET['contact'] ) ? sanitize_text_field( wp_unslash( $_GET['co
 					<dt><?php esc_html_e( 'Address', 'mor-websites' ); ?></dt>
 					<dd><?php echo do_shortcode( '[company_address]' ); ?></dd>
 
-					<dt><?php esc_html_e( 'Phone', 'mor-websites' ); ?></dt>
-					<dd><a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', mor_get_store_detail( 'company_phone' ) ) ); ?>"><?php echo do_shortcode( '[company_phone]' ); ?></a></dd>
+					<?php if ( mor_get_store_detail( 'company_phone' ) ) : ?>
+						<dt><?php esc_html_e( 'Phone', 'mor-websites' ); ?></dt>
+						<dd><a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', mor_get_store_detail( 'company_phone' ) ) ); ?>"><?php echo do_shortcode( '[company_phone]' ); ?></a></dd>
+					<?php endif; ?>
 
-					<dt><?php esc_html_e( 'Email', 'mor-websites' ); ?></dt>
-					<dd><a href="mailto:<?php echo esc_attr( mor_get_store_detail( 'company_email' ) ); ?>"><?php echo do_shortcode( '[company_email]' ); ?></a></dd>
+					<?php if ( mor_get_store_detail( 'company_email' ) ) : ?>
+						<dt><?php esc_html_e( 'Email', 'mor-websites' ); ?></dt>
+						<dd><a href="mailto:<?php echo esc_attr( mor_get_store_detail( 'company_email' ) ); ?>"><?php echo do_shortcode( '[company_email]' ); ?></a></dd>
+					<?php endif; ?>
 
 					<dt><?php esc_html_e( 'Business Hours', 'mor-websites' ); ?></dt>
 					<dd>
-						<?php esc_html_e( 'Monday – Friday: 8:00 AM – 6:00 PM', 'mor-websites' ); ?><br>
-						<?php esc_html_e( 'Saturday: 9:00 AM – 3:00 PM', 'mor-websites' ); ?><br>
-						<?php esc_html_e( 'Sunday: Closed (emergency support requests only)', 'mor-websites' ); ?>
+						<?php foreach ( $business_hours_lines as $i => $line ) : ?>
+							<?php echo esc_html( $line ); ?><?php echo $i < count( $business_hours_lines ) - 1 ? '<br>' : ''; ?>
+						<?php endforeach; ?>
 					</dd>
 				</dl>
 			</div>
@@ -65,26 +89,12 @@ $status = isset( $_GET['contact'] ) ? sanitize_text_field( wp_unslash( $_GET['co
 		</div>
 
 		<div class="faq-list">
-			<details class="faq-item" open>
-				<summary><?php esc_html_e( 'How quickly can you respond to a service request?', 'mor-websites' ); ?></summary>
-				<p><?php esc_html_e( 'Remote support requests submitted during business hours are typically picked up within 2 hours. On-site visits within Accra are usually scheduled within 24–48 hours of confirming your booking, depending on the service and technician availability. If you flag a request as urgent, we prioritise a same-day response wherever possible, though this cannot always be guaranteed outside business hours.', 'mor-websites' ); ?></p>
-			</details>
-			<details class="faq-item">
-				<summary><?php esc_html_e( 'Can I cancel or reschedule a booked service?', 'mor-websites' ); ?></summary>
-				<p><?php esc_html_e( 'Yes. You can cancel or reschedule any booked service package free of charge up to 24 hours before the scheduled appointment. Cancellations made with less than 24 hours\' notice, or missed appointments where our technician arrives on site and cannot gain access, may be subject to a call-out fee. Full details are in our Refunds & Cancellation Policy.', 'mor-websites' ); ?></p>
-			</details>
-			<details class="faq-item">
-				<summary><?php esc_html_e( 'Do you provide remote support or only on-site visits?', 'mor-websites' ); ?></summary>
-				<p><?php esc_html_e( 'Both. Many of our services — software troubleshooting, network configuration, security audits, and system optimisation — can be delivered remotely over a secure remote-desktop session. Hardware repairs, in-office network cabling, and CCTV/access-control installation require an on-site visit, which we currently offer within Accra and surrounding areas.', 'mor-websites' ); ?></p>
-			</details>
-			<details class="faq-item">
-				<summary><?php esc_html_e( 'What payment methods do you accept?', 'mor-websites' ); ?></summary>
-				<p><?php esc_html_e( 'Checkout accepts payment in Ghanaian Cedis (GHS). The specific payment gateways enabled (mobile money, card, or bank transfer) are configured directly in WooCommerce and may vary as we add providers — the checkout page will always show the options currently available at the time you book.', 'mor-websites' ); ?></p>
-			</details>
-			<details class="faq-item">
-				<summary><?php esc_html_e( 'How do I track the status of my service request?', 'mor-websites' ); ?></summary>
-				<p><?php esc_html_e( 'After checkout you\'ll receive an order confirmation by email with your booking reference. You can also log in to your account and view "My Account > Orders" at any time to see the current status of a booking. If a visit needs to be rescheduled on our side, we\'ll contact you directly using the phone number or email provided at checkout.', 'mor-websites' ); ?></p>
-			</details>
+			<?php foreach ( $faqs as $index => $faq ) : ?>
+				<details class="faq-item" <?php echo 0 === $index ? 'open' : ''; ?>>
+					<summary><?php echo esc_html( $faq['q'] ); ?></summary>
+					<p><?php echo esc_html( $faq['a'] ); ?></p>
+				</details>
+			<?php endforeach; ?>
 		</div>
 	</div>
 

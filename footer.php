@@ -30,8 +30,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<h3><?php esc_html_e( 'Contact', 'mor-websites' ); ?></h3>
 				<ul>
 					<li><?php echo do_shortcode( '[company_address]' ); ?></li>
-					<li><a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', mor_get_store_detail( 'company_phone' ) ) ); ?>"><?php echo do_shortcode( '[company_phone]' ); ?></a></li>
-					<li><a href="mailto:<?php echo esc_attr( mor_get_store_detail( 'company_email' ) ); ?>"><?php echo do_shortcode( '[company_email]' ); ?></a></li>
+					<?php if ( mor_get_store_detail( 'company_phone' ) ) : ?>
+						<li><a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', mor_get_store_detail( 'company_phone' ) ) ); ?>"><?php echo do_shortcode( '[company_phone]' ); ?></a></li>
+					<?php endif; ?>
+					<?php if ( mor_get_store_detail( 'company_email' ) ) : ?>
+						<li><a href="mailto:<?php echo esc_attr( mor_get_store_detail( 'company_email' ) ); ?>"><?php echo do_shortcode( '[company_email]' ); ?></a></li>
+					<?php endif; ?>
 				</ul>
 			</div>
 		</div>

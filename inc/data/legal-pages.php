@@ -38,7 +38,7 @@ function mor_get_legal_pages() {
 
 function mor_legal_service_delivery_policy() {
 	return '
-<p>This Service Delivery Policy explains how DigitalDrum Networks schedules, delivers, and confirms completion of the technology support services booked through this website. Because we sell bookable services rather than shippable physical goods, this policy covers appointment scheduling and service turnaround rather than package delivery — please read it alongside our Terms and Conditions and our Refunds &amp; Cancellation Policy.</p>
+<p>This Service Delivery Policy explains how [company_name] schedules, delivers, and confirms completion of the technology support services booked through this website. Because we sell bookable services rather than shippable physical goods, this policy covers appointment scheduling and service turnaround rather than package delivery — please read it alongside our Terms and Conditions and our Refunds &amp; Cancellation Policy.</p>
 
 <h2>Service Areas</h2>
 <p>On-site services (hardware repair, network cabling, CCTV and access control installation, and similar in-person work) are currently offered within Accra and its immediate surrounding areas, based from our office on Nii Amo Street, Osu, Accra. If your location falls outside our normal service radius, contact us before booking — we may still be able to accommodate the visit for an additional travel charge, agreed with you in advance, or we may recommend booking a remote service instead where the work allows it. Remote services (software troubleshooting, malware removal, cloud backup setup, and similar work that doesn\'t require physical access to hardware) are available to clients anywhere with a stable internet connection, though our support is provided in English and our working hours follow Ghana time (GMT).</p>
@@ -71,7 +71,7 @@ function mor_legal_service_delivery_policy() {
 
 function mor_legal_privacy_policy() {
 	return '
-<p>This Privacy Policy explains what personal information DigitalDrum Networks ("we", "us", "our") collects through this website, how we use and store it, who we share it with, and the rights you have over it. We process personal data in line with Ghana\'s Data Protection Act, 2012 (Act 843), and this policy is written to reflect the obligations that Act places on us as a data controller.</p>
+<p>This Privacy Policy explains what personal information [company_name] ("we", "us", "our") collects through this website, how we use and store it, who we share it with, and the rights you have over it. We process personal data in line with Ghana\'s Data Protection Act, 2012 (Act 843), and this policy is written to reflect the obligations that Act places on us as a data controller.</p>
 
 <h2>Information We Collect</h2>
 <p>We collect personal information in a small number of specific ways:</p>
@@ -125,7 +125,7 @@ function mor_legal_privacy_policy() {
 
 function mor_legal_terms_and_conditions() {
 	return '
-<p>These Terms and Conditions govern your use of this website and any service booked through it from DigitalDrum Networks ("we", "us", "our"), a technology support services business operating from Nii Amo Street, Osu, Accra, Ghana. By using this website or booking a service, you agree to these terms.</p>
+<p>These Terms and Conditions govern your use of this website and any service booked through it from [company_name] ("we", "us", "our"), a technology support services business operating from Nii Amo Street, Osu, Accra, Ghana. By using this website or booking a service, you agree to these terms.</p>
 
 <h2>Use of This Site</h2>
 <p>You may use this website to browse our services, make bookings, and contact us. You agree not to use the site for any unlawful purpose, to attempt to gain unauthorised access to any part of the site or its underlying systems, to submit false or misleading information when booking a service, or to use automated tools to scrape or interfere with normal operation of the site. We reserve the right to suspend or refuse service to anyone who misuses the site.</p>
@@ -146,7 +146,7 @@ function mor_legal_terms_and_conditions() {
 <p>We describe each service on this website as accurately as we can, including what is and is not included (for example, whether parts are included in a hardware service). Because technical support work often depends on the specific condition of your device or network, the description for a listed service reflects the standard scope of that service — if your situation requires additional work beyond that standard scope, we will discuss and agree any additional cost with you before carrying out extra work.</p>
 
 <h2>Intellectual Property</h2>
-<p>All content on this website — including text, images, logos, and design — is owned by DigitalDrum Networks or used under licence, and is protected by applicable copyright and intellectual property law. You may not copy, reproduce, or reuse content from this site for commercial purposes without our prior written permission.</p>
+<p>All content on this website — including text, images, logos, and design — is owned by [company_name] or used under licence, and is protected by applicable copyright and intellectual property law. You may not copy, reproduce, or reuse content from this site for commercial purposes without our prior written permission.</p>
 
 <h2>Third-Party Software and Licensing</h2>
 <p>Where our services involve installing or configuring third-party software, you are responsible for holding a valid licence for that software unless a service listing explicitly states licensing is included. We are not responsible for the ongoing performance, updates, or support of third-party software beyond the scope of the specific service booked.</p>
@@ -167,7 +167,7 @@ function mor_legal_terms_and_conditions() {
 
 function mor_legal_refunds_policy() {
 	return '
-<p>This Refunds &amp; Cancellation Policy explains how cancellations, rescheduling, and refunds work for services booked through DigitalDrum Networks. Because we provide services rather than shippable physical goods, this policy is built around service cancellation and satisfaction rather than a physical product return window — please read it alongside our Service Delivery Policy and Terms and Conditions.</p>
+<p>This Refunds &amp; Cancellation Policy explains how cancellations, rescheduling, and refunds work for services booked through [company_name]. Because we provide services rather than shippable physical goods, this policy is built around service cancellation and satisfaction rather than a physical product return window — please read it alongside our Service Delivery Policy and Terms and Conditions.</p>
 
 <h2>Cancelling Before an Appointment Is Scheduled</h2>
 <p>If you cancel your order before we have contacted you to confirm a specific appointment time, you are entitled to a full refund with no deduction, processed within 7 business days to your original payment method.</p>

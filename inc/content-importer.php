@@ -62,7 +62,15 @@ function mor_render_import_page() {
 
 		<div class="card" style="max-width:640px;padding:1.5rem;margin-top:1rem;">
 			<h2><?php esc_html_e( 'Services (WooCommerce Products)', 'mor-websites' ); ?></h2>
-			<p><?php esc_html_e( 'Creates the 20 DigitalDrum Networks service listings as real WooCommerce products, with images. Safe to click more than once — existing services (matched by SKU) are skipped, never duplicated.', 'mor-websites' ); ?></p>
+			<p>
+				<?php
+				printf(
+					/* translators: %s: company name from Store Details */
+					esc_html__( 'Creates the 20 %s service listings as real WooCommerce products, with images. Safe to click more than once — existing services (matched by SKU) are skipped, never duplicated.', 'mor-websites' ),
+					esc_html( mor_get_store_detail( 'company_name' ) )
+				);
+				?>
+			</p>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="<?php echo esc_attr( MOR_IMPORT_SERVICES_ACTION ); ?>">
 				<?php wp_nonce_field( MOR_IMPORT_SERVICES_ACTION, 'mor_import_services_nonce' ); ?>
@@ -261,8 +269,39 @@ function mor_handle_import_pages() {
 	// Legal pages.
 	foreach ( mor_get_legal_pages() as $legal_page ) {
 		$existing = get_page_by_path( $legal_page['slug'] );
+
 		if ( $existing ) {
-			$skipped++;
+			// WordPress auto-creates a placeholder "Privacy Policy" page on
+			// every fresh install, at this same slug, containing WordPress's
+			// own generic guidance text rather than content specific to this
+			// business — sometimes registered as wp_page_for_privacy_policy,
+			// sometimes not, depending on how the site was set up. Either
+			// way, if what's sitting at this slug isn't yet our real policy
+			// (doesn't mention the Data Protection Act clause unique to it),
+			// treat it as unwritten and replace it, so the site never ships
+			// the WordPress boilerplate. Anything that already contains our
+			// content is left alone (skipped) so a second import click never
+			// clobbers an admin's own further edits.
+			$is_unwritten_wp_privacy_placeholder = (
+				'privacy-policy' === $legal_page['slug']
+				&& false === strpos( $existing->post_content, 'Data Protection Act' )
+			);
+
+			if ( ! $is_unwritten_wp_privacy_placeholder ) {
+				$skipped++;
+				continue;
+			}
+
+			wp_update_post(
+				array(
+					'ID'           => $existing->ID,
+					'post_title'   => $legal_page['title'],
+					'post_status'  => 'publish',
+					'post_content' => wp_kses_post( $legal_page['content'] ),
+				)
+			);
+			update_option( 'wp_page_for_privacy_policy', $existing->ID );
+			$created++;
 			continue;
 		}
 
@@ -276,6 +315,9 @@ function mor_handle_import_pages() {
 			)
 		);
 		if ( $page_id && ! is_wp_error( $page_id ) ) {
+			if ( 'privacy-policy' === $legal_page['slug'] ) {
+				update_option( 'wp_page_for_privacy_policy', $page_id );
+			}
 			$created++;
 		}
 	}
