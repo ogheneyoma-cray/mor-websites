@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme setup: supports, menus, sidebars.
+ * Theme setup: supports, menus, assets.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,7 +18,6 @@ function mor_theme_setup() {
 	register_nav_menus(
 		array(
 			'primary' => __( 'Primary Menu', 'mor-websites' ),
-			'footer'  => __( 'Footer Menu', 'mor-websites' ),
 		)
 	);
 
@@ -28,19 +27,6 @@ add_action( 'after_setup_theme', 'mor_theme_setup' );
 
 function mor_theme_scripts() {
 	wp_enqueue_style( 'mor-theme-style', get_stylesheet_uri(), array(), MOR_THEME_VERSION );
+	wp_enqueue_script( 'mor-theme-nav', MOR_THEME_URI . '/assets/js/navigation.js', array(), MOR_THEME_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'mor_theme_scripts' );
-
-function mor_register_sidebars() {
-	register_sidebar(
-		array(
-			'name'          => __( 'Primary Sidebar', 'mor-websites' ),
-			'id'            => 'sidebar-1',
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
-}
-add_action( 'widgets_init', 'mor_register_sidebars' );

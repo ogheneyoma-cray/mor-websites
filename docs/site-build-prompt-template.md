@@ -25,10 +25,9 @@ reference it, don't ask me anything about this step.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 STORE DETAILS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Store Name:    [STORE_NAME]
-Product Type:  [PRODUCT_TYPE — e.g. "fashion items (clothes, shoes etc)",
-               "handmade jewelry", "electronics accessories"]
-Address:       [STORE_ADDRESS]
+Store Name:    DIGITALDRUM NETWORKS
+Product Type:  TECHNOLOGY SUPPORT SERVICES
+Address:       HNO D 20/6 NEAR COMMERCIAL BANK OSU ACCRA NII AMO STREET ACCRA
 Email:         [STORE_EMAIL]
 Phone:         [STORE_PHONE]
 Currency:      NGN (primary WooCommerce currency), with a front-end
@@ -165,7 +164,7 @@ hotlinks. Confirm the license of any source used permits this kind of use
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DESIGN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Reference site for layout, design system, and color palette: [REFERENCE_URL].
+Reference site for layout, design system, and color palette: https://kits.roxcreations.site/fenox/template-kit/home/.
 Visit this site, study its layout structure, typography, spacing, and color
 scheme, and replicate that system — but all copy/content must remain
 specific to [STORE_NAME] as written above, not copied from the reference
