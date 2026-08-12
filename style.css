@@ -2,7 +2,7 @@
 Theme Name: MOR Websites
 Theme URI: https://github.com/ogheneyoma-cray/mor-websites
 Author: MOR
-Description: Self-hosted, GitHub-branch-tracking WordPress theme. Each git branch is a complete independent layout for one client; each install tracks exactly one branch via the SITE_THEME_BRANCH wp-config.php constant.
+Description: Self-hosted, GitHub-branch-tracking WordPress theme. Each git branch is a complete independent layout for one client; each install tracks exactly one branch, set from the Appearance > Theme Updates admin screen.
 Version: 1.0.2
 Requires at least: 6.0
 Requires PHP: 7.4
