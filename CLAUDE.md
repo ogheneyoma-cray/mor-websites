@@ -14,11 +14,13 @@ One theme, one repo (`ogheneyoma-cray/mor-websites`), multiple branches. `main` 
 - If a task would touch this file and the current branch is `main`, stop and flag it instead of editing — ask which branch the change actually belongs on.
 - This file is fine to *read* on `main` (e.g. to reference it when scaffolding a new branch) — the restriction is on writing to it.
 
-## `.github/workflows/bump-version.yml` — wildcard branch trigger is intentional
+## `.github/workflows/bump-version.yml` — runs on every branch except `main`
 
-- The `on.push.branches` filter is `'**'` (all branches), not an explicit list. **Do not change it back to an explicit branch list** unless the user asks — this was a deliberate decision, not an oversight.
-- Reasoning: push-triggered GitHub Actions workflows only run using the copy of the workflow file that exists on the branch actually being pushed to. An explicit list living only on `main` would never apply to a brand-new client branch anyway (that branch's own copy of the file is what GitHub reads), so keeping `main` as a "canonical list" and merging it down to every new branch was extra manual work for no real safety benefit here. The wildcard means a new client branch works immediately with zero file edits.
-- Trade-off accepted knowingly: any branch pushed to — including stray/experimental ones, not just intentional client branches — gets auto-versioned via a patch bump commit.
+- The trigger is `branches-ignore: [main]`, not an explicit allowlist and not `main`-inclusive. **Do not change this** unless the user asks — it encodes two deliberate decisions, not an oversight.
+- Reasoning for "all branches, not an explicit list": push-triggered GitHub Actions workflows only run using the copy of the workflow file that exists on the branch actually being pushed to. An explicit list living only on `main` would never apply to a brand-new client branch anyway (that branch's own copy of the file is what GitHub reads), so keeping `main` as a "canonical list" and merging it down to every new branch was extra manual work for no real safety benefit here.
+- Reasoning for excluding `main`: **`main` is pinned at `Version: 1.0.0` in `style.css`, permanently.** It's the shared base branch client branches are cut from, not a site anything actually tracks in production, so its version number has no meaning to auto-increment. Earlier, `main` was included in the wildcard and drifted to 1.0.4+ purely from docs/config commits — this caused a real bug: a client branch tracking a lower version number than what `main` had drifted to would fail to show as an update. Excluding `main` from this workflow prevents that class of bug from recurring, on top of just being the correct semantic (main isn't versioned).
+- If `main`'s version is ever found to be something other than `1.0.0`, that's a bug — reset it to `1.0.0` rather than treating the drifted number as correct.
+- Trade-off accepted knowingly: any *non-main* branch pushed to — including stray/experimental ones, not just intentional client branches — still gets auto-versioned via a patch bump commit.
 
 ## Client branch builds
 

@@ -1,15 +1,18 @@
 name: Bump theme version
 
-# Runs on push to ANY branch — deliberate, so new client branches never
-# need this file edited to be brought under auto-versioning (push-triggered
-# workflows only run using the copy of this file that already exists on
-# the branch being pushed to, so a "main only" list wouldn't apply to a
-# freshly created branch anyway). See CLAUDE.md before changing this back
-# to an explicit branch list.
+# Runs on push to any branch EXCEPT main — deliberate, so new client
+# branches never need this file edited to be brought under
+# auto-versioning (push-triggered workflows only run using the copy of
+# this file that already exists on the branch being pushed to, so a
+# "main only" list wouldn't apply to a freshly created branch anyway).
+# main is excluded on purpose: it's pinned at 1.0.0 permanently, since
+# it's the shared base branch new client branches are cut from, not a
+# site anything tracks in production. See CLAUDE.md before changing
+# this back to an explicit branch list or including main.
 on:
   push:
-    branches:
-      - '**'
+    branches-ignore:
+      - main
     paths-ignore:
       - '.github/**'
 
