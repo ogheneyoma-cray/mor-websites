@@ -1,13 +1,15 @@
 name: Bump theme version
 
-# Add new client branches to this list as you create them — that's the
-# only edit required to bring a new branch under auto-versioning.
+# Runs on push to ANY branch — deliberate, so new client branches never
+# need this file edited to be brought under auto-versioning (push-triggered
+# workflows only run using the copy of this file that already exists on
+# the branch being pushed to, so a "main only" list wouldn't apply to a
+# freshly created branch anyway). See CLAUDE.md before changing this back
+# to an explicit branch list.
 on:
   push:
     branches:
-      - main
-      - client-a
-      - client-b
+      - '**'
     paths-ignore:
       - '.github/**'
 
